@@ -32,11 +32,17 @@ module RegisterFile #(parameter Width=32,NoOfRegisters=32)(
     );
     
     reg [Width-1:0] registers [NoOfRegisters-1:0];
-        
+    initial 
+        registers[0] = 0;
+            
     always @(posedge clock)
     begin     
             if(w) begin
-                registers[rd] <= wdata;
+                if(rd == 0)
+                    begin                        
+                    end
+                else  
+                  registers[rd] <= wdata;   
             end
             else begin
                 rdata1 <= registers[rs1];
