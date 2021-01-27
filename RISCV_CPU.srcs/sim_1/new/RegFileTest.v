@@ -64,8 +64,18 @@ module RegFileTG #(parameter Width=32)(
         
         for (integer j=31;j>=0;j=j-1)
         begin 
-            #1 w=0;rs1=j; rs2=j;clock=1;
+            #1 w=0;rs1=j; rs2=j;clock=1;            
             #1 clock=0;
+            if (j!=0)
+               begin
+                if(rdata1 != (j+2))                 
+                 begin
+                    $display("Error testing register file. Read data is -> %d. Should be -> %d",rdata1,j+2);
+                 end
+                end
+             else begin
+                if(rdata1 != 0) $display("Error testing register file. read data is -> %d. Should be -> %d",rdata1,j+2);
+             end
         end
         
         #1 clock=1;       

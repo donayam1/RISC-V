@@ -37,7 +37,7 @@ module ID #(parameter Width=32)(
     input [Width-1:0] Instruction,
     input clock
     );
-        localparam [6:0] R_TYPE = 7'b0110011,// The state labels and their assignments
+        localparam [6:0] R_TYPE = 7'b0110011,// Opcodes
                     I_TYPE = 7'b0010011,
                     LUI=7'b0110111,
                     AUIPC = 7'b0010111,

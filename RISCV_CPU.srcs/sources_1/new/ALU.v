@@ -43,10 +43,7 @@ module  ALU #(parameter Width=32) (
                 6'b000000: //ADDI
                     begin
                         res = op1 + op2;
-                    end
-                
-                endcase
-            
-            end
-    
+                    end                
+                endcase            
+            end    
 endmodule
