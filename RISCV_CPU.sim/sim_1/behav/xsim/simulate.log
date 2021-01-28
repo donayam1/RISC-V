@@ -1,0 +1,34 @@
+Vivado Simulator 2020.2
+Time resolution is 1 ps
+Error testing register file. Read data is ->         33. Should be ->          32
+Error testing register file. Read data is ->         32. Should be ->          31
+Error testing register file. Read data is ->         31. Should be ->          30
+Error testing register file. Read data is ->         30. Should be ->          29
+Error testing register file. Read data is ->         29. Should be ->          28
+Error testing register file. Read data is ->         28. Should be ->          27
+Error testing register file. Read data is ->         27. Should be ->          26
+Error testing register file. Read data is ->         26. Should be ->          25
+Error testing register file. Read data is ->         25. Should be ->          24
+Error testing register file. Read data is ->         24. Should be ->          23
+Error testing register file. Read data is ->         23. Should be ->          22
+Error testing register file. Read data is ->         22. Should be ->          21
+Error testing register file. Read data is ->         21. Should be ->          20
+Error testing register file. Read data is ->         20. Should be ->          19
+Error testing register file. Read data is ->         19. Should be ->          18
+Error testing register file. Read data is ->         18. Should be ->          17
+Error testing register file. Read data is ->         17. Should be ->          16
+Error testing register file. Read data is ->         16. Should be ->          15
+Error testing register file. Read data is ->         15. Should be ->          14
+Error testing register file. Read data is ->         14. Should be ->          13
+Error testing register file. Read data is ->         13. Should be ->          12
+Error testing register file. Read data is ->         12. Should be ->          11
+Error testing register file. Read data is ->         11. Should be ->          10
+Error testing register file. Read data is ->         10. Should be ->           9
+Error testing register file. Read data is ->          9. Should be ->           8
+Error testing register file. Read data is ->          8. Should be ->           7
+Error testing register file. Read data is ->          7. Should be ->           6
+Error testing register file. Read data is ->          6. Should be ->           5
+Error testing register file. Read data is ->          5. Should be ->           4
+Error testing register file. Read data is ->          4. Should be ->           3
+Error testing register file. read data is ->          3. Should be ->           2
+$finish called at time : 134 ns : File "F:/Vivado/RISCV_CPU/RISCV_CPU.srcs/sim_1/new/RegFileTest.v" Line 82

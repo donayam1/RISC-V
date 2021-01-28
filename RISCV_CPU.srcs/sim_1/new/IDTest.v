@@ -99,15 +99,49 @@ module IDTG #(parameter Width=32)(
                     
         #1 clock=1;pc=16;Instruction=32'h06458567;//jalr x10,x11,100         
         #1 clock=0;
-            if(immediate != 100 || Rd != 10 || PC != 16 || opcode != 7'b1100111)
+            if(immediate != 100 || Rd != 10 || PC != 16 || opcode != 7'b1100111 || op1 != 11 || op2 != 4 )
                 begin
                     $display("Error decoding jalr. Expected immediate %d, actual immediate %d. Expected Rd %d, Actual Rd %d",100,immediate,10,Rd);
                 end 
-                          
-        #1 clock=1;pc=12;Instruction=32'h19000593;//addi x11,x0,400   
-        #1 clock=0;     
+        
+        #1 clock=1;pc=20;Instruction=32'h0B50C63;//beq x10,x11,0x18         
+        #1 clock=0;
+            if(immediate != 12'h18 || Rd != 24 || PC != 20 || opcode != 7'b1100011  || op1 != 10) //op2=11
+                begin
+                    $display("Error decoding beq. Expected immediate %d, actual immediate %d. Expected Rd %d, Actual Rd %d",12'h18,immediate,10,Rd);
+                end
+                
+        #1 clock=1;pc=24;Instruction=32'h0645A503;//lw x10,x11,0x64
+        #1 clock=0;
+            if(immediate != 32'h64 || PC != 24 || opcode != 7'b0000011   || op1 != 11 || op2 != 4 )
+                begin
+                    $display("Error decoding lw. Expected immediate %d, actual immediate %d. Expected Rd %d, Actual Rd %d",12'h64,immediate,10,Rd);
+                end    
+                         
+        #1 clock=1;pc=28;Instruction=32'h06A5A223;//sw x10,x11,0x64
+        #1 clock=0;
+            if(immediate != 32'h64 || PC != 28 || opcode != 7'b0100011    || op1 != 11 || op2 != 10 )
+                begin
+                    $display("Error decoding sw. Expected immediate %d, actual immediate %d. Expected Rd %d, Actual Rd %d",12'h64,immediate,10,Rd);
+                end   
+                                
+        #1 clock=1;pc=32;Instruction=32'h019000593;//addi x11,x0,400                               
+        #1 clock=0;
+             if(immediate != 32'h190 || PC != 32 || opcode != 7'b0010011 || Rd !=11   || op1 != 0 || op2 != 16 )
+                begin
+                    $display("Error decoding addi. Expected immediate %d, actual immediate %d. Expected Rd %d, Actual Rd %d",12'h64,immediate,11,Rd);
+                end 
+                
+        #1 clock=1;pc=34;Instruction=32'hB50E33;//add x28,x10,x11                              
+        #1 clock=0;
+             if(immediate != 32'h0 || PC != 34 || opcode != 7'b0110011 || Rd !=28   || op1 != 10 || op2 != 11 )
+                begin
+                    $display("Error decoding add. Expected immediate %d, actual immediate %d. Expected Rd %d, Actual Rd %d",12'h64,immediate,11,Rd);
+                end         
+                    
         #1 $finish ;
     
+        
     end
     
     

@@ -46,7 +46,7 @@ module ID #(parameter Width=32)(
                     
                     B_TYPE = 7'b1100011,
                     LOAD =7'b0000011,  
-                    STOR = 7'b0100011
+                    STORE = 7'b0100011
                     ;    
 
     
@@ -96,9 +96,9 @@ module ID #(parameter Width=32)(
                     end 
                  B_TYPE:    
                     begin                        
-                        immediate <= {{20{Instruction[31]}},Instruction[31],Instruction[8],Instruction[30:25],Instruction[11:8]};                        
+                        immediate <= {{20{Instruction[31]}},{{Instruction[31],Instruction[8],Instruction[30:25],Instruction[11:8]}<<1}};                        
                     end 
-                STOR:
+                STORE:
                     begin
                         immediate <= {{20{Instruction[31]}},Instruction[31:25],Instruction[11:7]};
                     end    
