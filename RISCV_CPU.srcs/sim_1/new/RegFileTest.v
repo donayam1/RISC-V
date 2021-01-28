@@ -64,7 +64,7 @@ module RegFileTG #(parameter Width=32)(
         
         for (integer j=31;j>=0;j=j-1)
         begin 
-            #1 w=0;rs1=j; rs2=j;clock=1;            
+            #1 w=0;rs1=j+1; rs2=j;clock=1;            
             #1 clock=0;
             if (j!=0)
                begin

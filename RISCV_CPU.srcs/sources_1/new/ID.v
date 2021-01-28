@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
+// Company: Addis Ababa University 
+// Engineer: Donayam
 // 
 // Create Date: 01/25/2021 01:49:14 PM
 // Design Name: 
@@ -21,12 +21,12 @@
 
 
 module ID #(parameter Width=32)(
-    output reg[Width-1:0] op1,
-    output reg[Width-1:0] op2,
+    output [Width-1:0] op1,
+    output [Width-1:0] op2,
     output reg[Width-1:0] immediate,
     output reg[Width-1:0] PC,
     output reg[5:0] Rd,
-    
+    output reg[6:0] opcode,
     
     input [5:0] rd,
     input [Width-1:0]pc,
@@ -61,15 +61,17 @@ module ID #(parameter Width=32)(
     assign rs2 = Instruction[24:20];
      
     
-        RegisterFile rf(rdata1,rdata2,rs1,rs2,rd,rw,wdata,clock);
+        RegisterFile rf(op1,op2,rs1,rs2,rd,rw,wdata,clock);
     
         always @(posedge clock)
         begin
 
             Rd <= Instruction[11:7];
-            op1 <= rdata1;
-            op2 <= rdata2;
+//            op1 <= rdata1;
+//            op2 <= rdata2;
             PC <= pc;
+            opcode <= Instruction[6:0];
+            //immediate <= 0;
             
             case (Instruction[6:0]) //opcode 
                 I_TYPE,LOAD:
@@ -82,11 +84,11 @@ module ID #(parameter Width=32)(
                     end
                  LUI,AUIPC:
                     begin
-                        immediate[Width-1:0] <= {Instruction[31:12],{12{0}}};
+                        immediate <= {Instruction[31:12],{12'h0}};//{12{0}}};
                     end
                  JAL:    
                     begin                        
-                        immediate <= {{12{Instruction[31]}},Instruction[31],Instruction[19:12],Instruction[20],Instruction[30:21]};                        
+                        immediate <= {{11{Instruction[31]}}, {{Instruction[31],Instruction[19:12],Instruction[20],Instruction[30:21]}<<1}};                        
                     end
                  JALR:    
                     begin                        
@@ -100,6 +102,8 @@ module ID #(parameter Width=32)(
                     begin
                         immediate <= {{20{Instruction[31]}},Instruction[31:25],Instruction[11:7]};
                     end    
+                default:
+                        immediate <= 32'hx;
             endcase 
         end    
 endmodule
