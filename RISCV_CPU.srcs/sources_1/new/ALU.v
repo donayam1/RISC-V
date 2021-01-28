@@ -21,29 +21,60 @@
 
 
 module  ALU #(parameter Width=32) (
-    output reg[Width-1:0] res,
-    input [Width-1:0] op1,
-    input [Width-1:0] op2,
-    input [5:0] Operation
+    output  reg signed [Width-1:0] res,
+    input signed [Width-1:0] op1,
+    input signed [Width-1:0] op2,
+    input [3:0] operation,
+    input clock
     );
-    localparam [2:0] ADDI = 3'b000,// The state labels and their assignments
-                    SLTI = 3'b010,
-                    SLTIU = 3'b011,
-                    XORI = 3'b100,
-                    ORI = 3'b110,
-                    ANDI = 3'b111,
-                    SLLI = 3'b001,
-                    SRLI = 3'b101,
-                    SRAI = 3'b101;
+    localparam [2:0] ADD = 4'b0000,// 
+                     SUB = 4'b1000,
+                    SLT = 4'b0010,
+                    SLTU = 4'b0011,
+                    XOR = 4'b0100,
+                    OR = 4'b0110,
+                    AND = 4'b0111,
+                    SLL = 4'b0001,
+                    SRL = 4'b0101,
+                    SRA = 4'b1101;
+                    
+     wire [Width-1:0] uop1,uop2;
+     assign uop1 = op1;
+     assign uop2= op2;
     
-    
-        always @(*)
+        always @(posedge clock)
             begin            
-            case (Operation)
-                6'b000000: //ADDI
-                    begin
+            case (operation)
+                ADD: begin
                         res = op1 + op2;
-                    end                
+                    end 
+                SUB: begin
+                    res = op1 - op2;
+                end   
+                SLT: begin
+                    res = op1 < op2;
+                end                
+                SLTU: begin
+                    res = op1 < op2;
+                end
+                XOR: begin
+                    res = op1^op2;
+                end
+                OR: begin
+                    res = op1 | op2;
+                end
+                AND: begin
+                    res = op1 & op2;
+                end
+                SLL: begin
+                    res = op1 << op2[4:0];
+                end
+                SRL: begin
+                    res = op1 >> op2[4:0];
+                end
+                SRA: begin
+                    res = op1 >>> op2[4:0];
+                end
                 endcase            
             end    
 endmodule
