@@ -27,7 +27,7 @@ module  ALU #(parameter Width=32) (
     input [3:0] operation,
     input clock
     );
-    localparam [2:0] ADD = 4'b0000,// 
+    localparam [3:0] ADD = 4'b0000,// 
                      SUB = 4'b1000,
                      SLT = 4'b0010,
                     SLTU = 4'b0011,
@@ -55,7 +55,7 @@ module  ALU #(parameter Width=32) (
                     res <= op1 < op2;
                 end                
                 SLTU: begin
-                    res <= op1 < op2;
+                    res <= uop1 < uop2;
                 end
                 XOR: begin
                     res <= op1^op2;

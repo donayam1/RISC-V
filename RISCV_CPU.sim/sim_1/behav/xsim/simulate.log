@@ -1,4 +1,3 @@
 Vivado Simulator 2020.2
 Time resolution is 1 ps
-Error subtraction is not working
-$finish called at time : 7 ns : File "F:/Vivado/RISCV_CPU/RISCV_CPU.srcs/sim_1/new/ALUTest.v" Line 61
+$finish called at time : 33 ns : File "F:/Vivado/RISCV_CPU/RISCV_CPU.srcs/sim_1/new/ALUTest.v" Line 124
