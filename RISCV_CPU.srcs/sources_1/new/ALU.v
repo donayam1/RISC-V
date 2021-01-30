@@ -41,7 +41,7 @@ module  ALU #(parameter Width=32) (
      wire [Width-1:0] uop1,uop2;
      assign uop1 = op1;
      assign uop2= op2;
-    
+     
         always @(posedge clock)
             begin            
             case (operation)
@@ -75,6 +75,8 @@ module  ALU #(parameter Width=32) (
                 SRA: begin
                     res <= op1 >>> op2[4:0];
                 end
+                default:
+                    res <= 32'hx;
                 endcase            
             end    
 endmodule

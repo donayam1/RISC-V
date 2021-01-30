@@ -69,9 +69,9 @@ module IDTG #(parameter Width=32)(
     initial 
     begin
         
-        #0 clock=0;Instruction=0;wdata=0;pc=0;rd=0;rw=0;
-        
+        #0 clock=0;Instruction=0;wdata=0;pc=0;rd=0;rw=0;        
         #1 clock=0;        
+        
         for (integer i=0;i<=31;i=i+1)
         begin 
             #1 clock=1;rw=1;rd=i; wdata=i;

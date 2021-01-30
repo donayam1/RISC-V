@@ -96,7 +96,7 @@ module ID #(parameter Width=32)(
                     end 
                  B_TYPE:    
                     begin                        
-                        immediate <= {{20{Instruction[31]}},{{Instruction[31],Instruction[8],Instruction[30:25],Instruction[11:8]}<<1}};                        
+                        immediate <= {{20{Instruction[31]}},{{Instruction[31],Instruction[7],Instruction[30:25],Instruction[11:8]}<<1}};                        
                     end 
                 STORE:
                     begin
