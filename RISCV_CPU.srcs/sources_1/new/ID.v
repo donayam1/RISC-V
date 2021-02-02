@@ -26,12 +26,21 @@ module ID #(parameter Width=32)(
     output reg[Width-1:0] immediate,
     output reg[Width-1:0] PC,
     output reg[5:0] Rd,
-    output reg[6:0] opcode,
-    
-    input [5:0] rd,
-    input [Width-1:0]pc,
         
-    input rw,
+        
+    output reg[3:0] operation, //the alu operation to perform
+    output reg operandRevers, //indicates the operand should be reversed in the alu for performing grater than or equal to for branch instruciton
+    output reg immidateSelect, // select the immidiate filed for alu operation 
+    output reg j,               //indicates the instruction is jamp
+    output reg R, //control line  read signal   
+    output reg W, //control for the WB stage
+    
+    
+    input [Width-1:0]pc,
+    
+        
+    input w,    
+    input [5:0] rd,
     input [Width-1:0]wdata,
     
     input [Width-1:0] Instruction,
@@ -55,23 +64,22 @@ module ID #(parameter Width=32)(
     
     wire [5:0] rs1;
     wire [5:0] rs2;
-
+    wire [2:0] func3;
+    wire [6:0] func7;
     
     assign rs1 = Instruction[19:15];
     assign rs2 = Instruction[24:20];
-     
+    assign func3 =  Instruction[14:12];
+    assign func7 =  Instruction[31:25];
     
-        RegisterFile rf(op1,op2,rs1,rs2,rd,rw,wdata,clock);
+        RegisterFile rf(op1,op2,rs1,rs2,rd,w,r,wdata,clock);
     
+        //immediate filed determination         
         always @(posedge clock)
         begin
 
             Rd <= Instruction[11:7];
-//            op1 <= rdata1;
-//            op2 <= rdata2;
             PC <= pc;
-            opcode <= Instruction[6:0];
-            //immediate <= 0;
             
             case (Instruction[6:0]) //opcode 
                 I_TYPE,LOAD:
@@ -106,4 +114,57 @@ module ID #(parameter Width=32)(
                         immediate <= 32'hx;
             endcase 
         end    
+        
+        
+        always @(posedge clock)
+        begin
+        
+            operandRevers <= 0;
+            j<=0;
+            operation <= {0,func3};
+            immidateSelect <= 0;
+            
+            case (Instruction[6:0]) //opcode 
+                LOAD:
+                    begin
+                        immidateSelect <= 1'bx;
+                    end
+                I_TYPE:
+                    begin          
+                       immidateSelect <= 1;                                    
+                    end
+                 R_TYPE:
+                    begin
+                    end
+                 LUI,AUIPC:
+                    begin
+                        immidateSelect <= 1'bx;
+                        operation <= 4'b1111;
+                    end
+                 JAL:    
+                    begin        
+                        j <=1;                
+                    end
+                 JALR:    
+                    begin    
+                        j <=1;                     
+                    end 
+                 B_TYPE:    
+                    begin     
+                        j<=1;  
+                        if(func3 == 3'b101 || func3 == 3'b111)
+                        begin
+                            operandRevers <= 1;
+                            operation <= 4'b1000; // subtraction                             
+                        end                 
+                    end 
+                STORE:
+                    begin
+                    end    
+                default:
+                        immediate <= 32'hx;
+            endcase 
+        end
+        
+        
 endmodule

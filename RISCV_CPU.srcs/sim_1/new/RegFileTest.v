@@ -28,11 +28,12 @@ module RegFileTB #(parameter Width=32)();
     wire [5:0] rs2;
     wire [5:0] rd;
     wire  w;
+    wire r;
     wire [Width-1:0] wdata;
     wire  clock;
     
-    RegisterFile rf(rdata1,rdata2,rs1,rs2,rd,w,wdata,clock);
-    RegFileTG rftg(rdata1,rdata2,rs1,rs2,rd,w,wdata,clock);
+    RegisterFile rf(rdata1,rdata2,rs1,rs2,rd,w,r,wdata,clock);
+    RegFileTG rftg(rdata1,rdata2,rs1,rs2,rd,w,r,wdata,clock);
     
 endmodule
 
@@ -44,6 +45,7 @@ module RegFileTG #(parameter Width=32)(
     output reg[5:0] rs2,
     output reg[5:0] rd,
     output reg w,
+    output reg r,
     output reg[Width-1:0] wdata,
     output reg clock
     );
@@ -58,13 +60,13 @@ module RegFileTG #(parameter Width=32)(
         
         for (integer i=31;i>=0;i=i-1)
         begin 
-            #1 w=1;rd=i; wdata=i+2;clock=1;
+            #1 w=1;r=0;rd=i; wdata=i+2;clock=1;
             #1 clock=0;
         end
         
         for (integer j=31;j>=0;j=j-1)
         begin 
-            #1 w=0;rs1=j+1; rs2=j;clock=1;            
+            #1 w=0;r=1;rs1=j+1; rs2=j;clock=1;            
             #1 clock=0;
             if (j!=0)
                begin
