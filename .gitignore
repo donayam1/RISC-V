@@ -1,0 +1,6 @@
+/RISCV_CPU.cache/*
+/RISCV_CPU.hw/*
+/RISCV_CPU.ip_user_files/*
+/RISCV_CPU.runs/*
+/RISCV_CPU.sim/*
+
