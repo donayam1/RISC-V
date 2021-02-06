@@ -103,10 +103,10 @@ module EX #(parameter Width=32)(
             begin
                 aluOp2 = op1;
             end
-//            2'b11:
-//            begin
-                
-//            end
+            2'b11:
+            begin
+                aluOp2 = 4;
+            end
             default:
             begin
                 aluOp2 = op2;

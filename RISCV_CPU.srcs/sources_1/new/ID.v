@@ -28,9 +28,9 @@ module ID #(parameter Width=32)(
     output reg[5:0] Rd,
         
         
-    output reg[3:0] operation, //the alu operation to perform
-    output reg operandRevers, //indicates the operand should be reversed in the alu for performing grater than or equal to for branch instruciton
-    output reg immidateSelect, // select the immidiate filed for alu operation 
+    output reg[3:0] operation, //the alu operation to perform   
+    output reg [1:0] aluOp1Select,
+    output reg [1:0] aluOp2Select,
     output reg j,               //indicates the instruction is jamp
     output reg R, //control line  read signal   
     output reg W, //control for the WB stage
@@ -116,55 +116,55 @@ module ID #(parameter Width=32)(
         end    
         
         
-        always @(posedge clock)
-        begin
+//        always @(posedge clock)
+//        begin
         
-            operandRevers <= 0;
-            j<=0;
-            operation <= {0,func3};
-            immidateSelect <= 0;
+//            operandRevers <= 0;
+//            j<=0;
+//            operation <= {0,func3};
+//            immidateSelect <= 0;
             
-            case (Instruction[6:0]) //opcode 
-                LOAD:
-                    begin
-                        immidateSelect <= 1'bx;
-                    end
-                I_TYPE:
-                    begin          
-                       immidateSelect <= 1;                                    
-                    end
-                 R_TYPE:
-                    begin
-                    end
-                 LUI,AUIPC:
-                    begin
-                        immidateSelect <= 1'bx;
-                        operation <= 4'b1111;
-                    end
-                 JAL:    
-                    begin        
-                        j <=1;                
-                    end
-                 JALR:    
-                    begin    
-                        j <=1;                     
-                    end 
-                 B_TYPE:    
-                    begin     
-                        j<=1;  
-                        if(func3 == 3'b101 || func3 == 3'b111)
-                        begin
-                            operandRevers <= 1;
-                            operation <= 4'b1000; // subtraction                             
-                        end                 
-                    end 
-                STORE:
-                    begin
-                    end    
-                default:
-                        immediate <= 32'hx;
-            endcase 
-        end
+//            case (Instruction[6:0]) //opcode 
+//                LOAD:
+//                    begin
+//                        immidateSelect <= 1'bx;
+//                    end
+//                I_TYPE:
+//                    begin          
+//                       immidateSelect <= 1;                                    
+//                    end
+//                 R_TYPE:
+//                    begin
+//                    end
+//                 LUI,AUIPC:
+//                    begin
+//                        immidateSelect <= 1'bx;
+//                        operation <= 4'b1111;
+//                    end
+//                 JAL:    
+//                    begin        
+//                        j <=1;                
+//                    end
+//                 JALR:    
+//                    begin    
+//                        j <=1;                     
+//                    end 
+//                 B_TYPE:    
+//                    begin     
+//                        j<=1;  
+//                        if(func3 == 3'b101 || func3 == 3'b111)
+//                        begin
+//                            operandRevers <= 1;
+//                            operation <= 4'b1000; // subtraction                             
+//                        end                 
+//                    end 
+//                STORE:
+//                    begin
+//                    end    
+//                default:
+//                        immediate <= 32'hx;
+//            endcase 
+//        end
         
         
 endmodule
