@@ -83,9 +83,9 @@ module InstructionROM #(parameter Width=32,MemWidth=8,Size=256,Addbits=8)(
                 case (raddress)
                     8'd0: data <= 32'h06400513; //addi x10,x0,0x64
                     8'd4: data <= 32'h06400593; //addi x10,x0,0x64
-                    8'd8: data <= 32'h06400593; //add x12,x10,x11
-                    8'd12: data <= 32'h06400593; //add x12,x10,x11
-                    8'd16: data <= 32'h06400593; //add x12,x10,x11                         
+                    8'd8: data <= 32'h00b50633; //add x12,x10,x11
+                    //8'd12: data <= 32'h06400000; //add x12,x10,x11
+                    //8'd16: data <= 32'h06400000; //add x12,x10,x11                         
                     default:
                         data <= 32'h13; //NOP instruction addi x0,x0,0    
                 endcase

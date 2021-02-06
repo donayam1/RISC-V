@@ -22,6 +22,7 @@
 
 
 module IF #(parameter Width=32,Addbits=8)(
+    output  [Width-1:0] pc4,
     output reg [Width-1:0] pc,
     output [Width-1:0] instruction,
     
@@ -40,18 +41,20 @@ module IF #(parameter Width=32,Addbits=8)(
     
     initial
     begin
+        ProgramCounter <= 0;
         pc <= 0;
     end
     
+    assign pc4 = ProgramCounter;
     assign address = ProgramCounter[Addbits-1:0];
     
-    InstructionROM ic(instruction,address,1'b1,wdata,waddress,w,clock);
+    InstructionROM ic(instruction,address,1,wdata,waddress,w,clock);
     
     
     always @(posedge clock)
     begin
        if(en)
-         begin 
+         begin
             if(branch)
                 ProgramCounter <= branchAddress;
              else 
@@ -61,7 +64,7 @@ module IF #(parameter Width=32,Addbits=8)(
     
     always @(posedge clock)
     begin
-        pc <= ProgramCounter;
+       pc <= ProgramCounter;
     end
     
     
